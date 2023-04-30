@@ -34,10 +34,10 @@ export class BookEditorProvider implements vscode.CustomTextEditorProvider {
       enableScripts: true,
     };
     webviewPanel.webview.html = this.getHtmlForWebview(webviewPanel.webview);
-    function updateWebview() {
+    function updateWebview(text?: string) {
       webviewPanel.webview.postMessage({
         type: "update",
-        text: document.getText(),
+        text: text || document.getText(),
       });
     }
     webviewPanel.webview.onDidReceiveMessage(
@@ -48,12 +48,14 @@ export class BookEditorProvider implements vscode.CustomTextEditorProvider {
             return;
           case "modified":
             const edit = new vscode.WorkspaceEdit();
+            const newText = JSON.stringify(message.data, null, 2);
             edit.replace(
               document.uri,
               new vscode.Range(0, 0, document.lineCount, 0),
-              JSON.stringify(message.data, null, 2)
+              newText
             );
             vscode.workspace.applyEdit(edit);
+            updateWebview(newText);
             return;
           case "create-file":
             const wsedit = new vscode.WorkspaceEdit();
@@ -61,6 +63,7 @@ export class BookEditorProvider implements vscode.CustomTextEditorProvider {
             wsedit.createFile(filePath, { ignoreIfExists: true });
             wsedit.insert(filePath, new vscode.Position(0, 0), message.text);
             vscode.workspace.applyEdit(wsedit);
+            updateWebview();
             return;
           case "open":
             const pyUri = vscode.Uri.file(folder + "/" + message.node.py);
@@ -118,8 +121,8 @@ export class BookEditorProvider implements vscode.CustomTextEditorProvider {
   }
 
   private getHtmlForWebview(webview: vscode.Webview): string {
-    //const iframeOrigin = "https://perse.pythonsponge.com";
-    const iframeOrigin = "http://localhost:3000";
+    const iframeOrigin = "https://perse.pythonsponge.com";
+    //const iframeOrigin = "http://localhost:3000";
     return `
     <!doctype html><html lang="en">
     <head>

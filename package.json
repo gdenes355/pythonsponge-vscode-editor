@@ -35,7 +35,7 @@
             "filenamePattern": "book.json"
           }
         ],
-        "priority": "default"
+        "priority": "option"
       }
     ]
   },
