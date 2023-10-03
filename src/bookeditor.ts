@@ -98,6 +98,15 @@ export class BookEditorProvider implements vscode.CustomTextEditorProvider {
                 );
               });
             return;
+          case "read":
+            let uri = vscode.Uri.file(folder + "/" + message.url);
+            vscode.workspace.openTextDocument(uri).then((doc) => {
+              webviewPanel.webview.postMessage({
+                type: "file-read",
+                text: doc.getText(),
+              });
+            });
+            return;
         }
 
         vscode.window.showErrorMessage(message.type);

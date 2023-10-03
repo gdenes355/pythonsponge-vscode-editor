@@ -43,4 +43,8 @@ Books with duplicate IDs can result in the visual editor freezing. Please reload
 
 Initial release of the extension
 
+### 0.0.3
+
+Integration with the automated test runner against sample solutions
+
 

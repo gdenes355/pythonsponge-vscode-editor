@@ -10,3 +10,8 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ### Added
 - initial version of the plugin
+
+## [0.0.3] - 2023-10-03
+
+### Added
+- support for running automated tests against solutions

@@ -2,8 +2,8 @@
   "name": "pythonsponge-book-editor",
   "displayName": "Python Sponge book editor",
   "description": "Edit challenge books for https://www.pythonsponge.com/ locally in VSCode",
-  "version": "0.0.2",
-  "publisher": "gdenes.com",
+  "version": "0.0.3",
+  "publisher": "pythonsponge",
   "private": false,
   "license": "MIT",
   "repository": {
